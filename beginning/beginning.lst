@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.41.34120.0	    02/22/25 21:43:55
+Microsoft (R) Macro Assembler Version 14.43.34808.0	    02/22/25 22:44:30
 michael_fournier_beginning.asm				     Page 1 - 1
 
 
@@ -25,9 +25,9 @@ michael_fournier_beginning.asm				     Page 1 - 1
 	   75 72 6E 69 65
 	   72 00
 
- 00000029 FF			    myByte      DB    0FFh           ; 8-bit  (255 in unsigned decimal)
- 0000002A 1234			    myWord      DW    1234h          ; 16-bit (4660 in decimal)
- 0000002C 12345678		    myDword     DD    12345678h      ; 32-bit (305419896 in decimal)
+ 00000029 FF			    myByte      BYTE    0FFh           ; 8-bit  (255 in unsigned decimal)
+ 0000002A 1234			    myWord      WORD    1234h          ; 16-bit (4660 in decimal)
+ 0000002C 12345678		    myDword     DWORD   12345678h      ; 32-bit (305419896 in decimal)
 
  00000030 F6			    mySignedByte   SBYTE  -10        ; -10 decimal = 0xF6 in hex
  00000031 FB2E			    mySignedWord   SWORD  -1234      ; -1234 decimal
@@ -73,7 +73,7 @@ michael_fournier_beginning.asm				     Page 1 - 1
  00000056  E8 00000000 E   *	    call   ExitProcess
  0000005B			main endp
 				end main
-Microsoft (R) Macro Assembler Version 14.41.34120.0	    02/22/25 21:43:55
+Microsoft (R) Macro Assembler Version 14.43.34808.0	    02/22/25 22:44:30
 michael_fournier_beginning.asm				     Symbols 2 - 1
 
 
