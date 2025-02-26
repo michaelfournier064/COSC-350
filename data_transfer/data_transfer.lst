@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.43.34808.0	    02/25/25 20:23:22
+Microsoft (R) Macro Assembler Version 14.43.34808.0	    02/26/25 10:25:39
 MFdata_transfer.asm					     Page 1 - 1
 
 
@@ -10,19 +10,39 @@ MFdata_transfer.asm					     Page 1 - 1
 				.model flat,stdcall
 				.stack 4096
 				ExitProcess proto,dwExitCode:dword
- 00000000			.data
 
+ 00000000			.data
+					;Exercise One--Creating definition's and initialize values 
+					;for the following data types BYTE, SBYTE, WORD, SWORD, DWORD, SDWORD, REAL4
+ 00000000 22				myBYTE		BYTE		22h
+ 00000001 DE				mySBYTE		SBYTE		-22h
+ 00000002 4444				myWORD		WORD		4444h
+ 00000004 BBBC				mySWORD		SWORD		-4444h
+ 00000006 88888888			myDWORD		DWORD		88888888h
+ 0000000A 77777778			mySDWORD	SDWORD		-88888888h
+ 0000000E 40490FDB			myREAL4		REAL4		3.1415927
 
  00000000			.code
  00000000			main proc
-
+					;Exercise One--Moving variables into a register that properly contains their value
+					;for the following data types BYTE, SBYTE, WORD, SWORD, DWORD, SDWORD, REAL4
+ 00000000  8A 25 00000000 R		mov ah,	myBYTE
+ 00000006  A0 00000001 R		mov	al,	mySBYTE
+ 0000000B  66| 8B 1D			mov bx, myWORD
+	   00000002 R
+ 00000012  C1 E3 10			shl ebx, 16    ; Shift BX value into the upper half of EBX
+ 00000015  66| 8B 1D			mov bx, mySWORD
+	   00000004 R
+ 0000001C  A1 00000006 R		mov eax, myDWORD
+ 00000021  8B 15 0000000A R		mov edx, mySDWORD
+ 00000027  D9 05 0000000E R		fld myREAL4    ; Load floating-point value into FPU stack
 
 					invoke ExitProcess,0
- 00000000  6A 00	   *	    push   +000000000h
- 00000002  E8 00000000 E   *	    call   ExitProcess
- 00000007			main endp
+ 0000002D  6A 00	   *	    push   +000000000h
+ 0000002F  E8 00000000 E   *	    call   ExitProcess
+ 00000034			main endp
 				end main
-Microsoft (R) Macro Assembler Version 14.43.34808.0	    02/25/25 20:23:22
+Microsoft (R) Macro Assembler Version 14.43.34808.0	    02/26/25 10:25:39
 MFdata_transfer.asm					     Symbols 2 - 1
 
 
@@ -34,8 +54,8 @@ Segments and Groups:
 
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 00000000 DWord	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 00000007 DWord	  Public  'CODE'	
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000012 DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000034 DWord	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -43,7 +63,7 @@ Procedures, parameters, and locals:
                 N a m e                 Type     Value    Attr
 
 ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000007 Public STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000034 Public STDCALL
 
 
 Symbols:
@@ -59,6 +79,13 @@ Symbols:
 @fardata?  . . . . . . . . . . .	Text   	 FLAT
 @fardata . . . . . . . . . . . .	Text   	 FLAT
 @stack . . . . . . . . . . . . .	Text   	 FLAT
+myBYTE . . . . . . . . . . . . .	Byte	 00000000 _DATA	
+myDWORD  . . . . . . . . . . . .	DWord	 00000006 _DATA	
+myREAL4  . . . . . . . . . . . .	DWord	 0000000E _DATA	
+mySBYTE  . . . . . . . . . . . .	Byte	 00000001 _DATA	
+mySDWORD . . . . . . . . . . . .	DWord	 0000000A _DATA	
+mySWORD  . . . . . . . . . . . .	Word	 00000004 _DATA	
+myWORD . . . . . . . . . . . . .	Word	 00000002 _DATA	
 
 	   0 Warnings
 	   0 Errors
