@@ -1,0 +1,102 @@
+Microsoft (R) Macro Assembler Version 14.43.34808.0	    02/26/25 11:54:52
+02_26_2-2025.asm					     Page 1 - 1
+
+
+				;Class Examples
+				;COSC 350
+				;Michael Fournier
+
+				.386
+				.model flat,stdcall
+				.stack 4096
+				ExitProcess proto,dwExitCode:dword
+ 00000000			.data
+					;declare variables here
+ 00000000 11 22 33 44			myarr	BYTE	11h, 22h, 33h, 44h
+ 00000004 1A1B1C1D			mydwarr	DWORD	1a1b1c1dh, 2a2b2c2dh, 3a3b3c3dh, 4a4b4c4dh
+	   2A2B2C2D
+	   3A3B3C3D
+	   4A4B4C4D
+ 00000014 48 65 6C 6C 6F		mystr	BYTE	"Hello, World!", 0dh, 0ah, 0
+	   2C 20 57 6F 72
+	   6C 64 21 0D 0A
+	   00
+
+ 00000000			.code
+ 00000000			main proc
+					; Basic information about array sizes
+ 00000000  B8 00000004			mov eax,	LENGTHOF	myarr   ; Number of elements in myarr
+ 00000005  BB 00000004			mov ebx,	TYPE		mydwarr ; Type size (DWORD = 4 bytes)
+ 0000000A  B9 00000004			mov ecx,	LENGTHOF	mydwarr ; Number of DWORDs
+ 0000000F  BA 00000010			mov edx,	SIZEOF		mydwarr ; Total byte size
+
+					; Print characters from mystr one by one
+ 00000014  B9 00000010			mov ecx, LENGTHOF mystr
+ 00000019  BE 00000014 R		mov esi, OFFSET mystr
+
+ 0000001E			top:
+ 0000001E  8A 06			mov al, [esi]   ; Load a single character into AL
+ 00000020  46				inc esi         ; Move to next character
+
+ 00000021  E2 FB			loop top        ; Loop until ECX reaches 0
+
+					; Loop through DWORD array
+ 00000023  B9 00000004			mov ecx, LENGTHOF mydwarr
+ 00000028  BE 00000004 R		mov esi, OFFSET mydwarr
+
+ 0000002D			topDw:
+ 0000002D  8B 06			mov eax, [esi]  ; Load a DWORD into EAX
+ 0000002F  83 C6 04			add esi, 4      ; Move to next DWORD
+
+ 00000032  E2 F9			loop topDw      ; Loop until ECX reaches 0
+
+					invoke ExitProcess, 0
+ 00000034  6A 00	   *	    push   +000000000h
+ 00000036  E8 00000000 E   *	    call   ExitProcess
+ 0000003B			main endp
+				end main
+Microsoft (R) Macro Assembler Version 14.43.34808.0	    02/26/25 11:54:52
+02_26_2-2025.asm					     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000024 DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 0000003B DWord	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000003B Public STDCALL
+  top  . . . . . . . . . . . . .	L Near	 0000001E _TEXT	
+  topDw  . . . . . . . . . . . .	L Near	 0000002D _TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000003h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+myarr  . . . . . . . . . . . . .	Byte	 00000000 _DATA	
+mydwarr  . . . . . . . . . . . .	DWord	 00000004 _DATA	
+mystr  . . . . . . . . . . . . .	Byte	 00000014 _DATA	
+
+	   0 Warnings
+	   0 Errors
