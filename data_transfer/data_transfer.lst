@@ -1,17 +1,79 @@
+<<<<<<< HEAD
+Microsoft (R) Macro Assembler Version 14.43.34808.0	    02/27/25 21:11:03
+=======
 Microsoft (R) Macro Assembler Version 14.43.34808.0	    02/27/25 12:58:48
+>>>>>>> b99608ec84797b2295e700dad23e188c4b55f1f2
 MFdata_transfer.asm					     Page 1 - 1
 
 
-				;Data Transfer Lab
-				;COSC 350
-				;Michael Fournier
+				;*****************************************************************
+				; Title:      Data Transfer Lab
+				; Course:     COSC 350
+				; Author:     Michael Fournier
+				;*****************************************************************
 
 				.386
-				.model flat,stdcall
+				.model flat, stdcall
 				.stack 4096
-				ExitProcess proto,dwExitCode:dword
+
+				; External function for terminating the process
+				ExitProcess proto, dwExitCode:dword
 
  00000000			.data
+<<<<<<< HEAD
+				    ;---------------------------
+				    ; Exercise 1: Data Type Initialization
+				    ;---------------------------
+ 00000000 22			    myByte     BYTE   22h            ; Unsigned 8-bit value
+ 00000001 DE			    mySbyte    SBYTE  -22h           ; Signed 8-bit value
+ 00000002 4444			    myWord     WORD   4444h          ; Unsigned 16-bit value
+ 00000004 BBBC			    mySword    SWORD  -4444h         ; Signed 16-bit value
+ 00000006 88888888		    myDword    DWORD  88888888h      ; Unsigned 32-bit value
+ 0000000A 77777778		    mySdword   SDWORD -88888888h      ; Signed 32-bit value
+ 0000000E 40490FDB		    myReal4    REAL4  3.1415927       ; 32-bit floating-point value
+
+				    ;---------------------------
+				    ; Exercise 2: Array Declarations
+				    ;---------------------------
+ 00000012  0000003C [		    myArr      DWORD  60 dup(?)               ; Array of 60 uninitialized DWORDs
+	    00000000
+	   ]
+ 00000102  0000003C [		    myInitArr  DWORD  60 dup(0ABCDABCDh)        ; Array of 60 DWORDs initialized to 0ABCDABCDh
+	    ABCDABCD
+	   ]
+
+				    ;---------------------------
+				    ; Exercise 3: Hexadecimal DWORD Declaration
+				    ;---------------------------
+ 000001F2 12345678		    myHexDword DWORD  12345678h               ; DWORD storing hexadecimal value 12345678h
+
+				    ;---------------------------
+				    ; Exercise 4: 'three' Declaration and Bitwise Manipulation
+				    ;---------------------------
+ 000001F6 44448888		    three      DWORD  44448888h               ; DWORD 'three'
+
+				    ;---------------------------
+				    ; Exercise 5: Integer Array for Summation
+				    ;---------------------------
+ 000001FA 00010000		    intArray   DWORD  10000h, 20000h, 30000h, 40000h
+	   00020000
+	   00030000
+	   00040000
+
+				    ;---------------------------
+				    ; Exercise 6: Null-Terminated String Declaration
+				    ;---------------------------
+ 0000020A 4D 69 63 68 61	    myName     BYTE   "Michael Fournier", 0   ; Null-terminated string
+	   65 6C 20 46 6F
+	   75 72 6E 69 65
+	   72 00
+
+				    ;---------------------------
+				    ; Exercise 7: Array for Reversed String Storage
+				    ;---------------------------
+ 0000021B			    myNameArray BYTE  14 dup(?)               ; Array to store the reversed string
+
+=======
 					;Exercise One--Creating definitions and initializing values 
 					;for the following data types: BYTE, SBYTE, WORD, SWORD, DWORD, SDWORD, REAL4
  00000000 22				myByte		BYTE		22h
@@ -35,6 +97,7 @@ MFdata_transfer.asm					     Page 1 - 1
 					
 					;Exercise Four--Make a DWORD called 'three'
  000001F6 44448888			three		DWORD		44448888h
+>>>>>>> b99608ec84797b2295e700dad23e188c4b55f1f2
 
 					;Exercise Five--Implement the "Summing an Integer Array" and update it 
 					;to use a scale factor instead of direct addressing
@@ -55,6 +118,80 @@ MFdata_transfer.asm					     Page 1 - 1
 
  00000000			.code
  00000000			main proc
+<<<<<<< HEAD
+				    ;-------------------------------------------------
+				    ; Exercise 1: Transfer Data into Registers
+				    ;-------------------------------------------------
+ 00000000  A0 00000000 R	    mov   al, myByte                ; Load BYTE into AL
+ 00000005  66| 0F BE 05		    movsx ax, mySbyte               ; Sign-extend SBYTE into AX
+	   00000001 R
+ 0000000D  0F B7 1D		    movzx ebx, myWord               ; Zero-extend WORD into EBX
+	   00000002 R
+ 00000014  66| 8B 1D		    mov   bx, mySword               ; Load SWORD into BX (preserving sign)
+	   00000004 R
+ 0000001B  A1 00000006 R	    mov   eax, myDword              ; Load DWORD into EAX
+ 00000020  8B 15 0000000A R	    mov   edx, mySdword             ; Load SDWORD into EDX
+ 00000026  D9 05 0000000E R	    fld   myReal4                   ; Load REAL4 into FPU register
+
+				    ;-------------------------------------------------
+				    ; Exercise 4: Swap Upper and Lower Halves of 'three'
+				    ;-------------------------------------------------
+ 0000002C  A1 000001F6 R	    mov   eax, three              ; Load 'three' into EAX
+ 00000031  C1 C8 10		    ror   eax, 16                 ; Rotate right by 16 bits to swap the halves
+
+				    ;-------------------------------------------------
+				    ; Exercise 5: Summing an Integer Array (Direct Addressing)
+				    ;-------------------------------------------------
+ 00000034  BF 000001FA R	    mov   edi, OFFSET intArray    ; EDI points to intArray
+ 00000039  B9 00000004		    mov   ecx, LENGTHOF intArray  ; Set loop counter to the number of elements
+ 0000003E  B8 00000000		    mov   eax, 0                  ; Initialize sum to 0
+
+ 00000043			    sumLoop:
+ 00000043  03 07		        add   eax, [edi]              ; Add current array element to sum
+ 00000045  83 C7 04		        add   edi, TYPE intArray      ; Advance pointer by the size of one DWORD
+ 00000048  E2 F9		        loop  sumLoop                 ; Decrement ECX and loop if nonzero
+
+				    ;-------------------------------------------------
+				    ; Exercise 5 (Modified): Summing with Scaled Indexing
+				    ;-------------------------------------------------
+ 0000004A  B9 00000004		    mov   ecx, LENGTHOF intArray  ; Set loop counter to the number of elements
+ 0000004F  B8 00000000		    mov   eax, 0                  ; Reset sum to 0
+ 00000054  33 D2		    xor   edx, edx                ; Initialize index counter (EDX = 0)
+
+ 00000056			    sumLoopScaleFactor:
+ 00000056  03 04 95		        add   eax, [intArray + edx*4] ; Add array element using scaled indexing
+	   000001FA R
+ 0000005D  42			        inc   edx                   ; Increment index counter
+ 0000005E  E2 F6		        loop  sumLoopScaleFactor      ; Decrement ECX and loop if nonzero
+
+				    ;-------------------------------------------------
+				    ; Exercise 7: Reverse Copy of String into myNameArray
+				    ;-------------------------------------------------
+				    ; Calculate the length of the string (excluding the null terminator)
+ 00000060  B9 00000010		    mov   ecx, LENGTHOF myName - 1
+
+				    ; Set source pointer (ESI) to point to the end of the string
+ 00000065  BE 0000020A R	    mov   esi, OFFSET myName
+ 0000006A  03 F1		    add   esi, ecx
+
+				    ; Set destination pointer (EDI) to the beginning of myNameArray
+ 0000006C  BF 0000021B R	    mov   edi, OFFSET myNameArray
+
+ 00000071			    ReverseCopyLoop:
+ 00000071  8A 46 FF		        mov   al, [esi - 1]         ; Load character from the end of myName
+ 00000074  88 07		        mov   [edi], al             ; Store character into myNameArray
+ 00000076  4E			        dec   esi                   ; Move source pointer backward
+ 00000077  47			        inc   edi                   ; Move destination pointer forward
+ 00000078  E2 F7		        loop  ReverseCopyLoop       ; Decrement ECX and loop if nonzero
+
+
+				    invoke ExitProcess, 0
+ 0000007A  6A 00	   *	    push   +000000000h
+ 0000007C  E8 00000000 E   *	    call   ExitProcess
+ 00000081			main endp
+				end main
+Microsoft (R) Macro Assembler Version 14.43.34808.0	    02/27/25 21:11:03
+=======
 					;Exercise One--Moving variables into a register that properly contains their value
 					;for the following data types: BYTE, SBYTE, WORD, SWORD, DWORD, SDWORD, REAL4
  00000000  A0 00000000 R		mov al, myByte
@@ -111,6 +248,7 @@ MFdata_transfer.asm					     Page 1 - 1
  00000084			main endp
 				end main
 Microsoft (R) Macro Assembler Version 14.43.34808.0	    02/27/25 12:58:48
+>>>>>>> b99608ec84797b2295e700dad23e188c4b55f1f2
 MFdata_transfer.asm					     Symbols 2 - 1
 
 
@@ -123,7 +261,11 @@ Segments and Groups:
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
 _DATA  . . . . . . . . . . . . .	32 Bit	 00000229 DWord	  Public  'DATA'	
+<<<<<<< HEAD
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000081 DWord	  Public  'CODE'	
+=======
 _TEXT  . . . . . . . . . . . . .	32 Bit	 00000084 DWord	  Public  'CODE'	
+>>>>>>> b99608ec84797b2295e700dad23e188c4b55f1f2
 
 
 Procedures, parameters, and locals:
@@ -131,10 +273,17 @@ Procedures, parameters, and locals:
                 N a m e                 Type     Value    Attr
 
 ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+<<<<<<< HEAD
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000081 Public STDCALL
+  sumLoop  . . . . . . . . . . .	L Near	 00000043 _TEXT	
+  sumLoopScaleFactor . . . . . .	L Near	 00000056 _TEXT	
+  ReverseCopyLoop  . . . . . . .	L Near	 00000071 _TEXT	
+=======
 main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000084 Public STDCALL
   sumLoop  . . . . . . . . . . .	L Near	 00000043 _TEXT	
   sumLoopScaleFactor . . . . . .	L Near	 00000059 _TEXT	
   myNameLoop . . . . . . . . . .	L Near	 00000074 _TEXT	
+>>>>>>> b99608ec84797b2295e700dad23e188c4b55f1f2
 
 
 Symbols:
