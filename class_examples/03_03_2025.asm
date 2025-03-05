@@ -40,9 +40,9 @@ reverse proc
 	mov ecx, LENGTHOF myText
 	mov esi, OFFSET myRev
 	revtime:
-		inc esi 
 		pop eax
-		mov myRev, al
+		inc esi
+		mov [esi], eax
 		loop revtime
 
 	ret

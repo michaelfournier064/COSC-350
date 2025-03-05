@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.43.34808.0	    03/03/25 11:54:17
+Microsoft (R) Macro Assembler Version 14.43.34808.0	    03/05/25 11:10:44
 03_03_2025.asm						     Page 1 - 1
 
 
@@ -46,21 +46,21 @@ Microsoft (R) Macro Assembler Version 14.43.34808.0	    03/03/25 11:54:17
  00000011  B9 0000000D			mov ecx, LENGTHOF myText
  00000016  BE 0000000D R		mov esi, OFFSET myRev
  0000001B				revtime:
- 0000001B  46					inc esi 
- 0000001C  58					pop eax
- 0000001D  A2 0000000D R			mov myRev, al
- 00000022  E2 F7				loop revtime
+ 0000001B  58					pop eax
+ 0000001C  46					inc esi
+ 0000001D  89 06				mov [esi], eax
+ 0000001F  E2 FA				loop revtime
 
- 00000024  C3				ret
+ 00000021  C3				ret
 
- 00000025			reverse endp
+ 00000022			reverse endp
 
 					invoke ExitProcess, 0
- 00000025  6A 00	   *	    push   +000000000h
- 00000027  E8 00000000 E   *	    call   ExitProcess
- 0000002C			main endp
+ 00000022  6A 00	   *	    push   +000000000h
+ 00000024  E8 00000000 E   *	    call   ExitProcess
+ 00000029			main endp
 				end main
-Microsoft (R) Macro Assembler Version 14.43.34808.0	    03/03/25 11:54:17
+Microsoft (R) Macro Assembler Version 14.43.34808.0	    03/05/25 11:10:44
 03_03_2025.asm						     Symbols 2 - 1
 
 
@@ -73,7 +73,7 @@ Segments and Groups:
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
 _DATA  . . . . . . . . . . . . .	32 Bit	 0000000E DWord	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 0000002C DWord	  Public  'CODE'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000029 DWord	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -81,8 +81,8 @@ Procedures, parameters, and locals:
                 N a m e                 Type     Value    Attr
 
 ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000002C Public STDCALL
-reverse  . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000025 Public STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000029 Public STDCALL
+reverse  . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000022 Public STDCALL
   revtop . . . . . . . . . . . .	L Near	 0000000A _TEXT	
   revtime  . . . . . . . . . . .	L Near	 0000001B _TEXT	
 
