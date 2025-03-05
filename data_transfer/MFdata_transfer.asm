@@ -63,7 +63,7 @@ main proc
 sumLoop:
 	add eax, [edi]				; Adds the dereferenced value of EDI to EAX
 	add edi, TYPE intArray		; Moves to the next element in intArray
-	loop sumLoop					; Repeat until ECX reaches 0
+	loop sumLoop				; Repeat until ECX reaches 0
 
 	;Exercise Five (Modified) -- Using a Scale Factor for Indexed Addressing
 	mov ecx, LENGTHOF intArray  ; Number of elements
@@ -74,7 +74,7 @@ sumLoopScaleFactor:
 	add eax, [intArray + edx*4] ; Access elements using index scaled by 4 (DWORD size)
 	inc edx                     ; Move to next index
 	cmp edx, ecx                ; Compare index with array size
-	loop sumLoopScaleFactor        ; Jump back if not at the end
+	loop sumLoopScaleFactor     ; Jump back if not at the end
 
 	;Exercise 7--Create a loop that copies Michael Fournier into myNameArray in reverse order
 	mov ecx, LENGTHOF myName - 1  ; Length of the string (excluding null terminator)
