@@ -1,9 +1,8 @@
-Microsoft (R) Macro Assembler Version 14.43.34808.0	    03/07/25 21:27:53
-,Library Test #1: Integer I/O (InputLoop.asm		     Page 1 - 1
+Microsoft (R) Macro Assembler Version 14.43.34808.0	    03/07/25 22:38:27
+Tutorial Library Test #1.asm				     Page 1 - 1
 
 
 				;*****************************************************************
-				TITLE Library Test #1: Integer I/O (InputLoop.asm)
 				; Tests the Clrscr, Crlf, DumpMem, ReadInt, SetTextColor, 
 				; WaitMsg, WriteBin, WriteHex, and WriteString procedures.
 				; Course:     COSC 350
@@ -55,6 +54,9 @@ c:\Irvine\SmallWin.inc(11) : warning A4011:multiple .MODEL directives found : .M
 
  00000000			.code
  00000000			main PROC
+				;*****************************************************************
+				; Part 1--Changing the text and background color, 
+				;*****************************************************************
  00000000  B8 00000071		    mov eax, BlueTextOnGray     ; Moves the information from memory to register
  00000005  E8 00000000 E	    call SetTextColor           ; Changes the stored color values
 
@@ -67,16 +69,43 @@ c:\Irvine\SmallWin.inc(11) : warning A4011:multiple .MODEL directives found : .M
  00000019  B9 00000004		    mov ecx, LENGTHOF arrayD    ; Number of SDWORD's in arrayD
  0000001E  E8 00000000 E	    call DumpMem                ; Displays the memory informaion
 
+				;*****************************************************************
+				; Part 2
+				;*****************************************************************
+ 00000023  E8 00000000 E	    call Crlf                   ; Outputs a empty line by terminating the previous one
+ 00000028  B9 00000004		    mov ecx, COUNT              ; Copies COUNT into the ecx register
 
+ 0000002D			    L1:
+ 0000002D  BA 00000010 R	        mov edx, OFFSET prompt
+ 00000032  E8 00000000 E	        call WriteString
+ 00000037  E8 00000000 E	        call ReadInt            ; Input 32-bit signed integer into eax from the keyboard
+ 0000003C  E8 00000000 E	        call Crlf               ; Displays a new line by terminating the previous one
+				        
+ 00000041  E8 00000000 E	        call WriteInt           ; Outputs eax in signed decimal format
+ 00000046  E8 00000000 E	        call Crlf               ; Displays a new line by terminating the previous one
+
+ 0000004B  E8 00000000 E	        call WriteHex           ; Outputs eax in hexidecimal
+ 00000050  E8 00000000 E	        call Crlf               ; Displays a new line by terminating the previous one
+ 00000055  E8 00000000 E	        call WriteBin           ; Outputs eax in binary
+ 0000005A  E8 00000000 E	        call Crlf               ; Displays a new line by terminating the previous one
+ 0000005F  E8 00000000 E	        call Crlf               ; Displays a new line by terminating the previous one
+
+ 00000064  E2 C7		        Loop L1                 ; Number of loops is set by ecx, which is set to COUNT outside of the loop
+
+ 00000066  E8 00000000 E	    call WaitMsg            ; Outputs a message promtting the user to input a key for the program to contine
+
+ 0000006B  B8 00000007		    mov eax, DefaultColor
+ 00000070  E8 00000000 E	    call SetTextColor
+ 00000075  E8 00000000 E	    call Clrscr
 
 
 				    invoke ExitProcess, 0
- 00000023  6A 00	   *	    push   +000000000h
- 00000025  E8 00000000 E   *	    call   ExitProcess
- 0000002A			main endp
+ 0000007A  6A 00	   *	    push   +000000000h
+ 0000007C  E8 00000000 E   *	    call   ExitProcess
+ 00000081			main endp
 				end main
-Microsoft (R) Macro Assembler Version 14.43.34808.0	    03/07/25 21:27:53
-,Library Test #1: Integer I/O (InputLoop.asm		     Symbols 2 - 1
+Microsoft (R) Macro Assembler Version 14.43.34808.0	    03/07/25 22:38:27
+Tutorial Library Test #1.asm				     Symbols 2 - 1
 
 
 
@@ -170,7 +199,7 @@ Segments and Groups:
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
 _DATA  . . . . . . . . . . . . .	32 Bit	 00000030 DWord	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 0000002A DWord	  Public  'CODE'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000081 DWord	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -277,7 +306,8 @@ WriteStackFrame  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 WriteString  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteToFile  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteWindowsMsg  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000002A Public STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000081 Public STDCALL
+  L1 . . . . . . . . . . . . . .	L Near	 0000002D _TEXT	
 printf . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 scanf  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 wsprintfA  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
