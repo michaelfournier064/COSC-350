@@ -11,6 +11,8 @@
 ; External function for terminating the process
 ExitProcess proto, dwExitCode:dword
 
+INCLUDE     Irvine32.inc
+
 .data
 
 
