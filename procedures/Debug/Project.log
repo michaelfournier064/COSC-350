@@ -1,3 +1,2 @@
-﻿  Assembling MFprocedures.asm...
-c:\Irvine\SmallWin.inc(11): warning A4011: multiple .MODEL directives found : .MODEL ignored
+﻿  LINK : C:\Users\micha\source\repos\COSC-350\procedures\Debug\procedures.exe not found or not built by the last incremental link; performing full link
   Project.vcxproj -> C:\Users\micha\source\repos\COSC-350\procedures\Debug\procedures.exe
